@@ -1,0 +1,41 @@
+name: ipv6
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule: 
+    - cron: '*/30 * * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip
+        pip install ipaddress
+        pip install telebot
+        pip install retrying
+        pip install cryptography
+        pip install datetime
+        pip install requests
+        pip install icmplib
+   
+    - name: Run script
+      run: python ipv6.py
+    - name: Commit and push changes
+      run: |          
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git config credential.helper store
+          git add -A
+          git commit -m "Automatic update"
+          git push
